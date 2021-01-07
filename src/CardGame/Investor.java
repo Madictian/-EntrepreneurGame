@@ -13,4 +13,17 @@ public class Investor {
 
     public String getName() {
     }
+
+    public int getInvestmentAmount(int index) {
+        return investmentAmounts.get(index);
+    }
+
+    public String getInvestmentType(int index) {
+        return investmentTypes.get(index);
+    }
+
+    public void updateInvestment(int index, int amount) {
+        investmentAmounts.set(index, amount);
+    }
+
 }
