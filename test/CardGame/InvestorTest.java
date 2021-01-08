@@ -12,6 +12,7 @@ class InvestorTest {
     Investor investor;
     @Before
     public void setUp() {
+
         ArrayList<String> investmentTypes = new ArrayList<>();
         investmentTypes.add("Food-Service-Industry");
         ArrayList<Integer> investmentAmounts = new ArrayList<>();
@@ -22,12 +23,15 @@ class InvestorTest {
 
     @Test
     public void testClass() {
+
         Investor investor = new Investor();
         assertEquals(Investor.class, investor.getClass());
+
     }
 
     @Test
     public void testConstructor() {
+
         ArrayList<String> investmentTypes = new ArrayList<>();
         investmentTypes.add("Food-Service-Industry");
         ArrayList<Integer> investmentAmounts = new ArrayList<>();
@@ -36,14 +40,17 @@ class InvestorTest {
         assertEquals("Gordon Ramsay", newInvestor.getName());
         assertEquals("Food-Service-Industry", newInvestor.getInvestmentType(0));
         assertEquals(900000, newInvestor.getInvestmentAmount(0));
+
     }
 
     @Test
     public void testUpdateInvestment(){
-    setUp();
-    assertEquals(900000, investor.getInvestmentAmount(0));
-    investor.updateInvestment(0, 100000);
-    assertEquals(1000000, investor.getInvestmentAmount(0));
+
+        setUp();
+        assertEquals(900000, investor.getInvestmentAmount(0));
+        investor.updateInvestment(0, 100000);
+        assertEquals(1000000, investor.getInvestmentAmount(0));
+
     }
 
 }

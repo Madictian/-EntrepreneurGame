@@ -3,6 +3,8 @@ package sample;
 import CardGame.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class Controller {
 
@@ -30,13 +32,34 @@ public class Controller {
     };
 
     private ArrayList<Player> players = new ArrayList<>();
-    private ArrayList<Investor> Investors = new ArrayList<>()
-    {
-        {
-            //add(); // TODO add all 25 investors
+    private ArrayList<Investor> investors = new ArrayList<>();
+
+    public void investorSetup() {
+
+        //add(new Investor); // TODO add all 25 investors
+
+    }
+
+    public void newRound() {
+
+        if (investors.isEmpty())  {
+
+            investorSetup();
+
+        } else {
+
+            Collections.shuffle(investors);
+
         }
-    };
-    private ArrayList<Investor> InvestorPlaceHolder = new ArrayList<>();
+
+        // end of round - Investors are then removed from list.
+        investors.remove(0);
+        investors.remove(1);
+        investors.remove(2);
+        investors.remove(3);
+        investors.remove(4);
+
+    }
 
 
 
