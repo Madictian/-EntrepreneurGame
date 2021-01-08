@@ -6,6 +6,8 @@ public class OpportunityCard {
     private String description;
     private int opportunityId;
 
+    //TODO man kunne lave en liste til kortet med 2 muligheder?
+
     public OpportunityCard(int id) {
         this.opportunityId = id;
 
