@@ -16,9 +16,8 @@ class InvestorTest {
         investmentTypes.add("Food-Service-Industry");
         ArrayList<Integer> investmentAmounts = new ArrayList<>();
         investmentAmounts.add(900000);
-        ArrayList<Integer> defaultInvestmentAmounts = new ArrayList<>();
-        defaultInvestmentAmounts.add(investmentAmounts.get(0));
-        investor = new Investor("Gordon Ramsay", investmentTypes, investmentAmounts, defaultInvestmentAmounts);
+        investor = new Investor("Gordon Ramsay", investmentTypes, investmentAmounts);
+
     }
 
     @Test
@@ -45,28 +44,6 @@ class InvestorTest {
     assertEquals(900000, investor.getInvestmentAmount(0));
     investor.updateInvestment(0, 100000);
     assertEquals(1000000, investor.getInvestmentAmount(0));
-    }
-
-    @Test
-    public void testDefaultValue(){
-        setUp();
-        investor.updateInvestment(0,1000000);
-        assertEquals(1000000, investor.getInvestmentAmount(0));
-        assertEquals(900000, investor.getDefaultInvestmentAmount(0));
-    }
-    @Test
-    public void test_MethodToResetValuesEachRound(){
-        setUp();
-        investor.updateInvestment(0, 1000000);
-        assertEquals(1000000,investor.getInvestmentAmount(0));
-
-        investor.resetValue();
-        assertEquals(900000, investor.getInvestmentAmount(0));
-
-        investor.updateInvestment(0, 100000);
-
-        investor.resetValue();
-        assertEquals(900000, investor.getInvestmentAmount(0));
     }
 
 }

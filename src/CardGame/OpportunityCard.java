@@ -1,5 +1,7 @@
 package CardGame;
 
+import java.util.Random;
+
 public class OpportunityCard {
 
     private String title;
@@ -13,7 +15,7 @@ public class OpportunityCard {
 
         switch (id) {
             case 1 -> { // Golden Opportunity card
-                this.description = "Convince an investor to max out an investment into your idea";
+                this.description = "If you used one investor will always invest the highest possible amount\n" + "(no more than asked)";
                 this.title = "Golden Opportunity";
             }
             case 2 -> { // Persuasive card
@@ -21,16 +23,48 @@ public class OpportunityCard {
                 this.title = "Persuasive Opportunity";
             }
             case 3 -> { // Re-roll card
-                this.description = "Re-roll the dice";
+                this.description = "Can be used to reroll a die that went over the investors limit.";
                 this.title = "Safety Net";
             }
             case 4 -> { // Deny Opportunity card
-                this.description = "Player denies a specific opportunity card based on his choosing";
+                this.description = "negate the activation of 1 players opportunity card.";
                 this.title = "Deny opportunity";
             }
         }
 
+    }
 
+    public int reRoll(int roll){
+        Random rand = new Random();
+        roll = rand.nextInt((10 - 1) + 1) + 1;
+        return roll;
+    }
+
+    public Investor[] persuade(Investor[] investors, String investmentType) {
+
+        for (Investor currentInvestor: investors) {
+
+            int i;
+
+            for (i = 0; i < currentInvestor.getInvestmentTypeArray().size(); i++) {
+
+                if (currentInvestor.getInvestmentType(i).equals(investmentType)) {
+
+                    break;
+
+                } else if (i == currentInvestor.getInvestmentTypeArray().getLastIndex()) {
+
+                    currentInvestor.getInvestmentTypeArray().add(investmentType);
+
+                }
+
+            }
+
+            currentInvestor.getInvestmentAmountArray().set(i, 1000000);
+
+        }
+
+        return investors;
     }
 
     public int getOpportunityId() {

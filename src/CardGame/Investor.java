@@ -11,12 +11,6 @@ public class Investor {
     public Investor() {
     }
 
-    public Investor(String name, ArrayList<String> investmentTypes, ArrayList<Integer> investmentAmounts, ArrayList<Integer> defaultInvestmentAmounts) {
-        this.name = name;
-        this.investmentTypes = investmentTypes;
-        this.investmentAmounts = investmentAmounts;
-        this.defaultInvestmentAmounts = defaultInvestmentAmounts;
-    }
     public Investor(String name, ArrayList<String> investmentTypes, ArrayList<Integer> investmentAmounts) {
         this.name = name;
         this.investmentTypes = investmentTypes;
@@ -39,13 +33,5 @@ public class Investor {
         investmentAmounts.set(index, amount);
     }
 
-    public int getDefaultInvestmentAmount(int index) {
-        return defaultInvestmentAmounts.get(index);
-    }
 
-    public void resetValue() {
-        for (int i = 0; i < this.investmentAmounts.size(); i++){
-            this.investmentAmounts.set(i, getDefaultInvestmentAmount(i));
-        }
-    }
 }
