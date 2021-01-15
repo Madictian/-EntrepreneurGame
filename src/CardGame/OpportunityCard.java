@@ -34,6 +34,16 @@ public class OpportunityCard {
 
     }
 
+    // I thought this might be a method that can call any of the effects, though idk if its useful, TODO come back to this at a later time
+    /*public void cardEffect() {
+
+        switch (opportunityId) {
+            case 1 -> *//**//*;
+            case 2 -> persuade();
+        }
+
+    }*/
+
     public int reRoll(int roll){
         Random rand = new Random();
         roll = rand.nextInt((10 - 1) + 1) + 1;

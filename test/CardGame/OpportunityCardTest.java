@@ -42,6 +42,8 @@ class OpportunityCardTest {
 
         } else if (i == 2) {
 
+            // Call opportunityCard's effect here
+
             int roll = (rand.nextInt((10 - 1) + 1) + 1);
 
             if (roll > (investmentAmount / 100000)) {
