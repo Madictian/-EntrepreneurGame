@@ -29,6 +29,9 @@ public class Player {
         this.playerPoint += point;
     }
 
+    public ArrayList<OpportunityCard> getOpportunityCards() {
+        return opportunityCards;
+    }
 
 
 }
