@@ -50,7 +50,7 @@ public class OpportunityCard {
         return roll;
     }
 
-    public Investor[] persuade(Investor[] investors, String investmentType) {
+  /*  public Investor[] persuade(Investor[] investors, String investmentType) {
 
         for (Investor currentInvestor: investors) {
 
@@ -75,7 +75,7 @@ public class OpportunityCard {
         }
 
         return investors;
-    }
+    }*/
 
     public int getOpportunityId() {
         return opportunityId;

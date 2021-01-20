@@ -1,12 +1,37 @@
 package sample;
 
 import CardGame.*;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.TextArea;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import java.awt.*;
+import java.util.*;
+
+import CardGame.Player;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import CardGame.Investor;
 
 public class Controller {
+
+    @FXML
+    TextArea InvestorOne;
+    @FXML
+    TextArea InvestorTwo;
+    @FXML
+    TextArea InvestorThree;
+    @FXML
+    TextArea InvestorFour;
+    @FXML
+    TextArea InvestorFive;
+
+    @FXML
+    TextArea PlayerPoints;
+
 
     private ArrayList<ConceptCard> conceptCards = new ArrayList<>() // Holds all the different concept cards in the game
     {
@@ -34,7 +59,9 @@ public class Controller {
     private ArrayList<Player> players = new ArrayList<>(); // Players that exist in the game
     private ArrayList<Investor> investors = new ArrayList<>(); // All the investors that are not used ingame
     private ArrayList<OpportunityCard> cardsInPlay = new ArrayList<>(5); // Opportunity cards that are used/chosen .get(0) player-1's card, .get(1) player-2's card, etc.
+    //private Object Player;
 
+    //does this need to be Round setup?
     public void investorSetup() {
 
         Random rand = new Random();
@@ -47,7 +74,7 @@ public class Controller {
         String care = "Personal Care";
 
         //name, investments, investment amount
-        investors.add(new Investor("Reyn Ryanolds"¨, new ArrayList<String>()
+        investors.add(new Investor("Reyn Ryanolds", new ArrayList<String>()
         {
             {
                 add("Food Service Industry");
@@ -138,21 +165,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(700000);
                 } else {
-                    add();
+                    add(200000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(400000);
                 } else {
-                    add();
+                    add(200000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(200000);
                 } else {
-                    add();
+                    add(100000);
                 }
             }
         }));
@@ -174,21 +201,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(700000);
                 } else {
-                    add();
+                    add(200000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(200000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(400000);
                 } else {
-                    add();
+                    add(300000);
                 }
             }
         }));
@@ -210,21 +237,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(200000);
                 } else {
-                    add();
+                    add(400000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(500000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(200000);
                 }
             }
         }));
@@ -235,7 +262,7 @@ public class Controller {
                 add("Software");
                 add("Home-Décor");
                 add("Quality of Life Products");
-                add("Personal Care")
+                add("Personal Care");
             }
         }, new ArrayList<Integer>()
         {
@@ -247,25 +274,25 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(300000);
                 } else {
-                    add();
+                    add(500000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(100000);
                 } else {
-                    add();
+                    add(600000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(200000);
                 } else {
-                    add();
+                    add(300000);
                 }
             }
         }));
-        investors.add(new Investor("Willie Black"¨, new ArrayList<String>()
+        investors.add(new Investor("Willie Black", new ArrayList<String>()
         {
             { //Concepter
                 add("Qualiy of Life Products");
@@ -283,21 +310,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(400000);
                 } else {
-                    add();
+                    add(200000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(300000);
                 } else {
-                    add();
+                    add(500000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(500000);
                 } else {
-                    add();
+                    add(200000);
                 }
             }
         }));
@@ -319,25 +346,25 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(500000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(700000);
                 } else {
-                    add();
+                    add(100000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(200000);
                 } else {
-                    add();
+                    add(600000);
                 }
             }
         }));
-        investors.add(new Investor("Alex Lavigne"¨, new ArrayList<String>()
+        investors.add(new Investor("Alex Lavigne", new ArrayList<String>()
         {
             { //Concepter
                 add("Quality of Life Products");
@@ -355,21 +382,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(700000);
                 } else {
-                    add();
+                    add(300000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(700000);
                 } else {
-                    add();
+                    add(300000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(300000);
                 } else {
-                    add();
+                    add(100000);
                 }
             }
         }));
@@ -391,21 +418,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(200000);
                 } else {
-                    add();
+                    add(800000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(700000);
                 } else {
-                    add();
+                    add(600000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(400000);
                 }
             }
         }));
@@ -427,21 +454,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(200000);
                 } else {
-                    add();
+                    add(600000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(500000);
                 } else {
-                    add();
+                    add(600000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(300000);
                 } else {
-                    add();
+                    add(500000);
                 }
             }
         }));
@@ -463,21 +490,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(200000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(300000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(300000);
                 } else {
-                    add();
+                    add(500000);
                 }
             }
         }));
@@ -499,21 +526,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(700000);
                 } else {
-                    add();
+                    add(500000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(400000);
                 } else {
-                    add();
+                    add(300000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(300000);
                 } else {
-                    add();
+                    add(200000);
                 }
             }
         }));
@@ -535,21 +562,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(400000);
                 } else {
-                    add();
+                    add(200000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(700000);
                 } else {
-                    add();
+                    add(400000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(500000);
                 } else {
-                    add();
+                    add(700000);
                 }
             }
         }));
@@ -571,21 +598,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(500000);
                 } else {
-                    add();
+                    add(400000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(500000);
                 } else {
-                    add();
+                    add(300000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(400000);
                 }
             }
         }));
@@ -607,21 +634,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(300000);
                 } else {
-                    add();
+                    add(800000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(700000);
                 } else {
-                    add();
+                    add(300000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(300000);
                 } else {
-                    add();
+                    add(400000);
                 }
             }
         }));
@@ -643,21 +670,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(400000);
                 } else {
-                    add();
+                    add(200000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(400000);
                 } else {
-                    add();
+                    add(600000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(200000);
                 } else {
-                    add();
+                    add(500000);
                 }
             }
         }));
@@ -679,21 +706,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(500000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(500000);
                 } else {
-                    add();
+                    add(300000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(100000);
                 } else {
-                    add();
+                    add(800000);
                 }
             }
         }));
@@ -715,21 +742,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(800000);
                 } else {
-                    add();
+                    add(200000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(500000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(400000);
                 } else {
-                    add();
+                    add(700000);
                 }
             }
         }));
@@ -751,21 +778,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(400000);
                 } else {
-                    add();
+                    add(700000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(3000000);
                 } else {
-                    add();
+                    add(700000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(500000);
                 } else {
-                    add();
+                    add(600000);
                 }
             }
         }));
@@ -787,21 +814,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(200000);
                 } else {
-                    add();
+                    add(500000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(300000);
                 } else {
-                    add();
+                    add(600000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(200000);
                 } else {
-                    add();
+                    add(400000);
                 }
             }
         }));
@@ -823,21 +850,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(200000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(200000);
                 } else {
-                    add();
+                    add(500000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(100000);
                 } else {
-                    add();
+                    add(200000);
                 }
             }
         }));
@@ -859,21 +886,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(800000);
                 } else {
-                    add();
+                    add(600000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(700000);
                 } else {
-                    add();
+                    add(200000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(400000);
                 }
             }
         }));
@@ -895,21 +922,21 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(300000);
                 } else {
-                    add();
+                    add(500000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(700000);
                 } else {
-                    add();
+                    add(300000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(200000);
                 }
             }
         }));
@@ -931,27 +958,34 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(500000);
                 } else {
-                    add();
+                    add(700000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(100000);
                 } else {
-                    add();
+                    add(700000);
                 }
 
                 if (rand.nextBoolean()) {
-                    add();
+                    add(600000);
                 } else {
-                    add();
+                    add(400000);
                 }
             }
         }));
 
 
 
+    }
+    public void UpdatePlayerPoints(){
+        PlayerPoints.setText("");
+        Player player = new Player();
+        for (Object playerr: players) {
+            PlayerPoints.appendText("\n\n" + player.getName() + "\n" + player.getPlayerPoints());
+        }
     }
 
     public void newRound() {
@@ -967,54 +1001,271 @@ public class Controller {
             Collections.shuffle(investors);
 
         }
+        InvestorOne.setText(investors.get(0).toString());
+        InvestorTwo.setText(investors.get(1).toString());
+        InvestorThree.setText(investors.get(2).toString());
+        InvestorFour.setText(investors.get(3).toString());
+        InvestorFive.setText(investors.get(4).toString());
+
+
+
+
+        //</editor-fold>
+
+
+        //<editor-fold-desc="Phase 2">
+
+        // TODO Players choose to lay down a opportunity card or not.
+        for (int i = 0; i < players.size(); i++) {
+
+            if (!players.get(i).getOpportunityCards().isEmpty()) {
+
+                int cardId = layDownOpportunityCard(players.get(i));
+
+                if (cardId != 0) {
+
+                    for (OpportunityCard currentCard : players.get(i).getOpportunityCards()) {
+
+                        if (currentCard.getOpportunityId() == cardId) {
+
+                            players.get(i).getOpportunityCards().remove(i);
+                            cardsInPlay.set(i, currentCard);
+                            break;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        //</editor-fold>
+
+
+
+
+//        // This is used if we want a players turn to be created in playerTurn()
+//        for (int i = 0; i < players.size(); i++) {
+//            playerTurn(i);
+//        }
+
+
+
+
+
+        //<editor-fold-desc="Phase 3">
+        // method to update the player point textArea
+
+        // TODO Player 1 turn
+
+        if (cardsInPlay.get(0) != null) {
+            // Player have laid down a opportunity card
+
+            if (useOpportunityCard()) {
+                // Player wants to use the card this round
+
+                for (int i = 0; i < cardsInPlay.size(); i++) {
+                    // Check if another player have a denial card
+
+                    if (cardsInPlay.get(i).getOpportunityId() == 4) {
+
+                        if (useOpportunityCard()) {
+
+                            cardsInPlay.set(i, null);
+                            cardsInPlay.set(0, null);
+                            break;
+
+                        }
+
+                    }
+
+                }
+
+            } else {
+
+                players.get(0).getOpportunityCards().add(cardsInPlay.get(0));
+                cardsInPlay.set(0, null);
+
+            }
+
+        }
+
+
+        // TODO If player 1 have laid down a opportunity card, then he/she will be prompted to choose to use the card or not
+        // TODO If the player chooses to use the card, search all cards in the cardsInPlay for a deny-opporunity card, if it exitsts, ask the player if he/she wants to deny this players card
+
+
+        //</editor-fold>
+
+        //<editor-fold-desc="Phase 4">
+
+        // TODO Player 2 turn
+
+
+        //</editor-fold>
+
+        //<editor-fold-desc="Phase 5">
+
+        // TODO Player 3 turn
+
+        //</editor-fold>
+
+        //<editor-fold-desc="Phase 6">
+
+        // TODO Player 4 turn
+
+        //</editor-fold>
+
+        //<editor-fold-desc="Phase 7">
+
+        // TODO Player 5 turn
+
+        //</editor-fold>
 
         // end of round - Investors are then removed from list.
         investors.remove(0);
-        investors.remove(1);
-        investors.remove(2);
-        investors.remove(3);
-        investors.remove(4);
+        investors.remove(0);
+        investors.remove(0);
+        investors.remove(0);
+        investors.remove(0);
+
+        PlayerPoints.setText("");
+        for (int i = 0; i < players.size(); i++){
+            PlayerPoints.appendText(String.valueOf(players.get(i).getPlayerPoints()) + "\n");
+        }
+
+
+    } // End of newRound()
+
+    public void playerTurn  (int playerId) {
+
+        if (cardsInPlay.get(playerId) != null) {
+            // Player have laid down a opportunity card
+
+            if (useOpportunityCard()) {
+                // Player wants to use the card this round
+
+                for (int i = 0; i < cardsInPlay.size(); i++) {
+                    // Check if another player have a denial card
+
+                    if (cardsInPlay.get(i).getOpportunityId() == 4) {
+
+                        if (useOpportunityCard()) {
+
+                            cardsInPlay.set(i, null);
+                            cardsInPlay.set(playerId, null);
+                            break;
+
+                        }
+
+                    }
+
+                }
+
+            } else {
+
+                players.get(playerId).getOpportunityCards().add(cardsInPlay.get(0));
+                cardsInPlay.set(playerId, null);
+
+            }
+
+        }
 
     }
 
-    //</editor-fold>
+    // Used for confirmation by player on to use opportunity card
+    public boolean useOpportunityCard() {
 
-    //<editor-fold-desc="Phase 2">
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Opportunity Card", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText(null);
+        alert.setContentText("Do you wanna use your opportunity card this turn?");
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES){
+            return true;
+        } else {
+            return false;
+        }
 
-    // TODO Players choose to lay down a opportunity card or not
+    }
 
-    //</editor-fold>
+    // Here you choose to lay down a opportunitycard
+    public int layDownOpportunityCard(Player player) {
 
-    //<editor-fold-desc="Phase 3">
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Lay Down Opportunity Card");
+        alert.setHeaderText(null);
 
-    // TODO Player 1 turn
-    // TODO If player 1 have laid down a opportunity card, then he/she will be prompted to choose to use the card or not
-    // TODO If the player chooses to use the card, search all cards in the cardsInPlay for a deny-opporunity card, if it exitsts, ask the player if he/she wants to deny this players card
+        ButtonType pass = new ButtonType("Pass", ButtonData.CANCEL_CLOSE);
 
-    //</editor-fold>
+        ArrayList<TextArea> cards = new ArrayList<>();
 
-    //<editor-fold-desc="Phase 4">
+        for (OpportunityCard currentCard: player.getOpportunityCards()) {
 
-    // TODO Player 2 turn
+            TextArea card = new TextArea();
+            card.setText(currentCard.toString());
+            card.setId(String.valueOf(currentCard.getOpportunityId()));
+            cards.add(card);
 
-    //</editor-fold>
+        }
 
-    //<editor-fold-desc="Phase 5">
+        switch(cards.size()) {
+            case 1 -> {
+                HBox container = new HBox(cards.get(0));
+                alert.getDialogPane().setContent(container);
+            }
+            case 2 -> {
+                HBox container = new HBox(cards.get(0), cards.get(1));
+                alert.getDialogPane().setContent(container);
+            }
+            case 3 -> {
+                HBox container = new HBox(cards.get(0), cards.get(1), cards.get(2));
+                alert.getDialogPane().setContent(container);
+            }
+            case 4 -> {
+                HBox container = new HBox(cards.get(0), cards.get(1), cards.get(2), cards.get(3));
+                alert.getDialogPane().setContent(container);
+            }
+        }
 
-    // TODO Player 3 turn
 
-    //</editor-fold>
+        for (int i = 1; i < cards.size() + 1; i++) {
 
-    //<editor-fold-desc="Phase 6">
+            ButtonType cardButton = new ButtonType("Card " + i, ButtonData.OTHER);
+            alert.getDialogPane().getButtonTypes().add(cardButton);
 
-    // TODO Player 4 turn
+        }
 
-    //</editor-fold>
 
-    //<editor-fold-desc="Phase 7">
+        alert.getDialogPane().getButtonTypes().add(pass);
 
-    // TODO Player 5 turn
+        alert.showAndWait();
 
-    //</editor-fold>
+        if (alert.getResult() == pass) {
+
+            return 0;
+
+        } else {
+
+            switch(alert.getResult().getText()) {
+                case "Card 1" -> {
+                    return Integer.parseInt(cards.get(0).getId());
+                }
+                case "Card 2" -> {
+                    return Integer.parseInt(cards.get(1).getId());
+                }
+                case "Card 3" -> {
+                    return Integer.parseInt(cards.get(2).getId());
+                }
+                case "Card 4" -> {
+                    return Integer.parseInt(cards.get(3).getId());
+                }
+                default -> { return 0; }
+            }
+
+        }
+
+    }
+
+
+
+
 
 }

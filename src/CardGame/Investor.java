@@ -22,6 +22,12 @@ public class Investor {
         return name;
     }
 
+    public ArrayList getInvestmentTypes(){
+        return investmentTypes;
+    }
+    public ArrayList getInvestmentAmounts(){
+        return investmentAmounts;
+    }
     public int getInvestmentAmount(int index) {
         return investmentAmounts.get(index);
     }
@@ -32,6 +38,15 @@ public class Investor {
 
     public void updateInvestment(int index, int amount) {
         investmentAmounts.set(index, amount);
+    }
+
+    public String toString(){
+        String stuff = "";
+        for (int i = 0; i < investmentAmounts.size(); i++) {
+            stuff += investmentAmounts.get(i) + " " + investmentTypes.get(i) + "\n";
+
+        }
+        return name + "\n" + stuff;
     }
 
 

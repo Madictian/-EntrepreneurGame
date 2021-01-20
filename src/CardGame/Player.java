@@ -6,7 +6,7 @@ public class Player {
 
     private String name;
     private int playerPoint;
-    private ArrayList<OpportunityCard> opportunityCards = new ArrayList<OpportunityCard>();¨// Player chosen opportunity cards
+    private ArrayList<OpportunityCard> opportunityCards = new ArrayList<OpportunityCard>();// Player chosen opportunity cards
     private ConceptCard conceptCard; // Players chosen concept card
 
     public Player() {
@@ -15,6 +15,10 @@ public class Player {
     public Player(String name) {
         this.name = name;
         playerPoint = 0;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getPlayerPoints() {

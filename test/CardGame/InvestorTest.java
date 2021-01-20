@@ -53,4 +53,12 @@ class InvestorTest {
 
     }
 
+    @Test
+    public void testToString(){
+        setUp();
+        assertEquals("Gordon Ramsay\n" +
+                "900000 Food-Service-Industry", investor.toString());
+
+    }
+
 }
