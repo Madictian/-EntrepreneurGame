@@ -9,6 +9,20 @@ public class Player {
     private ArrayList<OpportunityCard> opportunityCards = new ArrayList<OpportunityCard>();// Player chosen opportunity cards
     private ConceptCard conceptCard; // Players chosen concept card
 
+    public int getTurnInvestment() {
+        return turnInvestment;
+    }
+
+    public void setTurnInvestment(int turnInvestment) {
+        this.turnInvestment = turnInvestment;
+    }
+
+    private int turnInvestment;
+
+    public void setConceptCard(ConceptCard conceptCard) {
+        this.conceptCard = conceptCard;
+    }
+
     public Player() {
     }
 

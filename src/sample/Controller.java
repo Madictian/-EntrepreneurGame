@@ -2,15 +2,14 @@ package sample;
 
 import CardGame.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.TextArea;
 
 import java.awt.*;
 import java.util.*;
 
 import CardGame.Player;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -61,7 +60,6 @@ public class Controller {
     private ArrayList<OpportunityCard> cardsInPlay = new ArrayList<>(5); // Opportunity cards that are used/chosen .get(0) player-1's card, .get(1) player-2's card, etc.
     //private Object Player;
 
-    //does this need to be Round setup?
     public void investorSetup() {
 
         Random rand = new Random();

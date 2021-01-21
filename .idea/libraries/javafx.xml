@@ -35,6 +35,8 @@
       <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
       <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
       <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
+      <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
+      <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
     </CLASSES>
     <JAVADOC />
     <NATIVE>
@@ -55,8 +57,11 @@
       <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
       <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
       <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
+      <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
     </NATIVE>
     <SOURCES>
+      <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
+      <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
       <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
       <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
       <root url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" />
@@ -125,6 +130,10 @@
     <jarDirectory url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" recursive="false" />
     <jarDirectory url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" recursive="false" />
     <jarDirectory url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" recursive="false" type="SOURCES" />
     <jarDirectory url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" recursive="false" type="SOURCES" />
     <jarDirectory url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" recursive="false" type="SOURCES" />
     <jarDirectory url="file://$USER_HOME$/Desktop/javafx-sdk-11.0.2/lib" recursive="false" type="SOURCES" />
