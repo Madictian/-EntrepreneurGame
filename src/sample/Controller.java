@@ -927,7 +927,6 @@ public class Controller {
             }
         }));
 
-
     }
 
     public void UpdatePlayerPoints() {
@@ -976,7 +975,9 @@ public class Controller {
             players.add(new Player());
         }
 
-        chooseOpportunityCards();
+        for (int i = 0; i < amountOfPlayers; i++) {
+            chooseOpportunityCards(players.get(i));
+        }
 
         investorSetup();
 
@@ -994,7 +995,7 @@ public class Controller {
 
             currentRound++;
 
-            //<editor-fold-desc="Phase 1">
+            //<editor-fold-desc="Phase 1 - Investors">
 
             if (investors.isEmpty()) {
 
@@ -1014,9 +1015,7 @@ public class Controller {
 
             //</editor-fold>
 
-            //<editor-fold-desc="Phase 2">
-
-            // TODO show 5 random concepts on the board, which players can choose from
+            //<editor-fold-desc="Phase 2 - Concepts">
 
             Random rand = new Random();
             ArrayList<ButtonType> conceptButtons = new ArrayList<>();
@@ -1076,11 +1075,14 @@ public class Controller {
 
             }
 
+
+            // TODO (FXML) - Find a way to create or show choosen concept card on the board, and remember to place them at the correct players
+
+
             //</editor-fold>
 
-            //<editor-fold-desc="Phase 3">
+            //<editor-fold-desc="Phase 3 - Opportunity cards">
 
-            // TODO Players choose to lay down a opportunity card or not.
             for (int i = 0; i < players.size(); i++) {
 
                 if (!players.get(i).getOpportunityCards().isEmpty()) {
@@ -1103,83 +1105,22 @@ public class Controller {
                 }
             }
 
+
+            // TODO (FXML) - Find a way to place opportunity cards face down on the board
+
+
             //</editor-fold>
 
+            //<editor-fold-desc="Phase 4 - Player turns">
 
-            //        // This is used if we want a players turn to be created in playerTurn()
-            //        for (int i = 0; i < players.size(); i++) {
-            //            playerTurn(i);
-            //        }
-
-
-            //<editor-fold-desc="Phase 3">
-            // method to update the player point textArea
-
-            // TODO Player 1 turn
-
-            if (cardsInPlay.get(0) != null) {
-                // Player have laid down a opportunity card
-
-                if (useOpportunityCard()) {
-                    // Player wants to use the card this round
-
-                    for (int i = 0; i < cardsInPlay.size(); i++) {
-                        // Check if another player have a denial card
-
-                        if (cardsInPlay.get(i).getOpportunityId() == 4) {
-
-                            if (useOpportunityCard()) {
-
-                                cardsInPlay.set(i, null);
-                                cardsInPlay.set(0, null);
-                                break;
-
-                            }
-
-                        }
-
-                    }
-
-                } else {
-
-                    players.get(0).getOpportunityCards().add(cardsInPlay.get(0));
-                    cardsInPlay.set(0, null);
-
-                }
-                investorSetup();
+            // This is used if we want a players turn to be created in playerTurn()
+            for (int i = 0; i < players.size(); i++) {
+                playerTurn(i);
             }
 
-
-            // TODO If player 1 have laid down a opportunity card, then he/she will be prompted to choose to use the card or not
-            // TODO If the player chooses to use the card, search all cards in the cardsInPlay for a deny-opporunity card, if it exitsts, ask the player if he/she wants to deny this players card
-
-
             //</editor-fold>
 
-            //<editor-fold-desc="Phase 4">
-
-            // TODO Player 2 turn
-
-
-            //</editor-fold>
-
-            //<editor-fold-desc="Phase 5">
-
-            // TODO Player 3 turn
-
-            //</editor-fold>
-
-            //<editor-fold-desc="Phase 6">
-
-            // TODO Player 4 turn
-
-            //</editor-fold>
-
-            //<editor-fold-desc="Phase 7">
-
-            // TODO Player 5 turn
-
-            //</editor-fold>
+            //<editor-fold-desc="Phase 5 - End of round">
 
             // end of round - Investors are then removed from list.
             investors.remove(0);
@@ -1192,6 +1133,8 @@ public class Controller {
             for (int i = 0; i < players.size(); i++) {
                 PlayerPoints.appendText(String.valueOf(players.get(i).getPlayerPoints()) + "\n");
             }
+
+            //</editor-fold>
 
         }
 
@@ -1243,7 +1186,50 @@ public class Controller {
 
         }
 
-    } // TODO
+        int opportunityCardTempInt = 0;
+
+        if (cardsInPlay.get(playerId).getOpportunityId() == 1) {
+            opportunityCardTempInt = 1;
+        } else if (cardsInPlay.get(playerId).getOpportunityId() == 3) {
+            opportunityCardTempInt = 2;
+        }
+
+        rollDice(players.get(playerId).getTurnInvestment(), opportunityCardTempInt);
+
+        // TODO - kortets effect skal kaldes
+        // persuasion card
+        // 2 interactable onMouseClicked (Persuade an investor to back your idea instead of a competitors idea.
+        // Convince all investors that a certain concept is a bad idea)
+        // whichever part is clicked on, call that method?
+
+        if (cardsInPlay.get(playerId).getOpportunityId() == 2) {
+
+            // investor.getInvestmentType.indexOf(
+            // call effect here
+            // find investoren
+            // getArrayList
+            // når koncepterne addes, så bliver de addes som et nyt concept. de bliver givet en parameter
+            // som basically er en string i conceptcard klassen
+            // i conceptardmetoden, den vil vi gerne tjekke indexOf
+
+            String conceptString = ;
+            for (int i = 0; i < 5; ++i) {
+
+                // create a alert that allows player to choose effect
+                int index = investors.get(i).getInvestmentTypes().indexOf(conceptString);
+                if (index != -1) {
+
+                    // It exits andinput code here
+                    investors.get(i).getInvestmentAmounts().set(index, 1000000);
+                } else {
+                    investors.get(i).getInvestmentTypes().add(conceptString);
+                    investors.get(i).getInvestmentAmounts().add(1000000);
+                }
+
+            }
+
+        }
+    }
 
     // Used for confirmation by player on to use opportunity card
     public boolean useOpportunityCard() {
