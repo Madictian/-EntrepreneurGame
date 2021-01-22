@@ -3,6 +3,7 @@ package sample;
 import CardGame.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 
 import java.awt.*;
@@ -11,6 +12,7 @@ import java.util.*;
 import CardGame.Player;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import CardGame.Investor;
@@ -1207,17 +1209,7 @@ public class Controller {
         Optional<String> result = dialog.showAndWait();
         players.get(playerId).setTurnInvestment(Integer.parseInt(result.get()));
 
-        int opportunityCardTempInt = 0;
-
-        if (cardsInPlay.get(playerId).getOpportunityId() == 1) {
-            opportunityCardTempInt = 1;
-        } else if (cardsInPlay.get(playerId).getOpportunityId() == 3) {
-            opportunityCardTempInt = 2;
-        }
-
-        rollDice(players.get(playerId).getTurnInvestment(), opportunityCardTempInt);
-
-        // TODO
+        pickInvestor();
 
         if (cardsInPlay.get(playerId) != null) {
             // Player have laid down a opportunity card
@@ -1405,5 +1397,110 @@ public class Controller {
 
     }
 
+    @FXML
+    public int pickInvestor() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(null);
+        alert.setHeaderText("Please pick an investor");
+        alert.setContentText(null);
+
+        ButtonType button1 = new ButtonType(investors.get(0).getName(), ButtonData.OTHER);
+
+        ButtonType button2 = new ButtonType(investors.get(1).getName(), ButtonData.OTHER);
+
+        ButtonType button3 = new ButtonType(investors.get(2).getName(), ButtonData.OTHER);
+
+        ButtonType button4 = new ButtonType(investors.get(3).getName(), ButtonData.OTHER);
+
+        ButtonType button5 = new ButtonType(investors.get(4).getName(), ButtonData.OTHER);
+
+        alert.getDialogPane().getButtonTypes().addAll(button1, button2, button3, button4, button5);
+
+        alert.showAndWait();
+
+        if (alert.getResult() == button1) {
+            return 0;
+        } else if (alert.getResult() == button2) {
+            return 1;
+        } else if (alert.getResult() == button3) {
+            return 2;
+        } else if (alert.getResult() == button4) {
+            return 3;
+        } else if (alert.getResult() == button5) {
+            return 4;
+        } else
+            return -1;
+    }
+
+    public void chooseOpportunityCards(Player player) {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Choose an opportunity card");
+        alert.setHeaderText(null);
+
+        for (int i = 0; i < players.size() - 1; i++) {
+
+            ArrayList<TextArea> cards = new ArrayList<>(); // 4
+
+            if (i == 0) {
+                for (OpportunityCard currentCard : opportunityCards) {
+
+                    TextArea card = new TextArea();
+                    card.setText(currentCard.toString());
+                    card.setId(String.valueOf(currentCard.getOpportunityId()));
+                    cards.add(card);
+
+                }
+            }
+
+            switch (cards.size()) { // bliver brugt til at sætte textar eaet rigtige steder.
+                case 1 -> {
+                    HBox container = new HBox(cards.get(0));
+                    alert.getDialogPane().setContent(container);
+                }
+                case 2 -> {
+                    HBox container = new HBox(cards.get(0), cards.get(1));
+                    alert.getDialogPane().setContent(container);
+                }
+                case 3 -> {
+                    HBox container = new HBox(cards.get(0), cards.get(1), cards.get(2));
+                    alert.getDialogPane().setContent(container);
+                }
+                case 4 -> {
+                    HBox container = new HBox(cards.get(0), cards.get(1), cards.get(2), cards.get(3));
+                    alert.getDialogPane().setContent(container);
+                }
+            }
+
+            for (int n = 1; n < cards.size() + 1; n++) {
+
+                ButtonType cardButton = new ButtonType("Card " + n, ButtonData.OTHER);
+                alert.getDialogPane().getButtonTypes().add(cardButton);
+
+            }
+
+            alert.showAndWait();
+
+            switch (alert.getResult().getText()) { //
+                case "Card 1" -> { // cards -'> textarea - get(0) første tekst area. og id'et er opportunity card som den henfører til.
+                    player.getOpportunityCards().add(opportunityCards.get(0));
+                    cards.set(0, null);
+                }
+                case "Card 2" -> {
+                    player.getOpportunityCards().add(opportunityCards.get(1));
+                    cards.set(1, null);
+                }
+                case "Card 3" -> {
+                    player.getOpportunityCards().add(opportunityCards.get(2));
+                    cards.set(2, null);
+                }
+                case "Card 4" -> {
+                    player.getOpportunityCards().add(opportunityCards.get(3));
+                    cards.set(3, null);
+                }
+            }
+
+        }
+
+    }
 
 }
