@@ -1211,8 +1211,9 @@ public class Controller {
             // når koncepterne addes, så bliver de addes som et nyt concept. de bliver givet en parameter
             // som basically er en string i conceptcard klassen
             // i conceptardmetoden, den vil vi gerne tjekke indexOf
-
-            String conceptString = ;
+            //TODO make into seperate method
+            //TODO Make alert that allows the player to choose concept and set that concept == conceptstring
+            String conceptString = "";
             for (int i = 0; i < 5; ++i) {
 
                 // create a alert that allows player to choose effect
