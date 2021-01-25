@@ -6,8 +6,6 @@ public class OpportunityCard {
     private String description;
     private int opportunityId;
 
-    //TODO man kunne lave en liste til kortet med 2 muligheder?
-
     public OpportunityCard(int id) {
         this.opportunityId = id;
 
@@ -31,49 +29,6 @@ public class OpportunityCard {
         }
 
     }
-
-    // I thought this might be a method that can call any of the effects, though idk if its useful, TODO come back to this at a later time
-    /*public void cardEffect() {
-
-        switch (opportunityId) {
-            case 1 -> *//**//*;
-            case 2 -> persuade();
-        }
-
-    }*/
-
-    public int reRoll(int roll){
-        Random rand = new Random();
-        roll = rand.nextInt((10 - 1) + 1) + 1;
-        return roll;
-    }
-
-  /*  public Investor[] persuade(Investor[] investors, String investmentType) {
-
-        for (Investor currentInvestor: investors) {
-
-            int i;
-
-            for (i = 0; i < currentInvestor.getInvestmentTypeArray().size(); i++) {
-
-                if (currentInvestor.getInvestmentType(i).equals(investmentType)) {
-
-                    break;
-
-                } else if (i == currentInvestor.getInvestmentTypeArray().getLastIndex()) {
-
-                    currentInvestor.getInvestmentTypeArray().add(investmentType);
-
-                }
-
-            }
-
-            currentInvestor.getInvestmentAmountArray().set(i, 1000000);
-
-        }
-
-        return investors;
-    }*/
 
     public int getOpportunityId() {
         return opportunityId;

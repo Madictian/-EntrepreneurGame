@@ -30,30 +30,8 @@ public class Controller {
     @FXML
     TextArea PlayerPoints;
 
-
-    private ArrayList<ConceptCard> conceptCards = new ArrayList<>() // Holds all the different concept cards in the game
-    {
-        {
-            add(new ConceptCard("Software"));
-            add(new ConceptCard("Tools of Proficiency"));
-            add(new ConceptCard("Food Service Industry"));
-            add(new ConceptCard("Clothing"));
-            add(new ConceptCard("Personal care"));
-            add(new ConceptCard("Home-Decor"));
-            add(new ConceptCard("Quality of Life Products"));
-        }
-    };
-
-    private ArrayList<OpportunityCard> opportunityCards = new ArrayList<>() // The 4 different opportunity cards that exist
-    {
-        {
-            add(new OpportunityCard(1));
-            add(new OpportunityCard(2));
-            add(new OpportunityCard(3));
-            add(new OpportunityCard(4));
-        }
-    };
-
+    private ArrayList<ConceptCard> conceptCards = new ArrayList<>(); // Holds all the different concept cards in the game
+    private ArrayList<OpportunityCard> opportunityCards = new ArrayList<>(); // The 4 different opportunity cards that exist
     private ArrayList<Player> players = new ArrayList<>(); // Players that exist in the game
     private ArrayList<Investor> investors = new ArrayList<>(); // All the investors that are not used ingame
     private ArrayList<OpportunityCard> cardsInPlay = new ArrayList<>(5); // Opportunity cards that are used/chosen .get(0) player-1's card, .get(1) player-2's card, etc.
@@ -66,7 +44,7 @@ public class Controller {
         String quality = "Quality of Life Products";
         String cloth = "Clothing";
         String tool = "Tools of Proficiency";
-        String home = "Home-Décor";
+        String home = "Home-Decor";
         String soft = "Software";
         String care = "Personal Care";
 
@@ -110,7 +88,7 @@ public class Controller {
                 add("Quality of Life Products");
                 add("Personal Care");
                 add("Software");
-                add("Home-Décor");
+                add("Home-Decor");
             }
         }, new ArrayList<Integer>() {
             {
@@ -142,7 +120,7 @@ public class Controller {
 
         investors.add(new Investor("Eiichi oroda", new ArrayList<String>() {
             { //Concepter
-                add("Home-Décor");
+                add("Home-Decor");
                 add("Clothing");
                 add("Quality of Life Products");
                 add("Tools of Proficiency");
@@ -177,7 +155,7 @@ public class Controller {
         investors.add(new Investor("Oliver Jamie", new ArrayList<String>() {
             { //Concepter
                 add("Tools of Proficiency");
-                add("Home-Décor");
+                add("Home-Decor");
                 add("Food Service Industry");
                 add("Personal Care");
             }
@@ -213,7 +191,7 @@ public class Controller {
                 add("Tools of Proficiency");
                 add("Food Service Industry");
                 add("Clothing");
-                add("Home-Décor");
+                add("Home-Decor");
             }
         }, new ArrayList<Integer>() {
             {
@@ -246,7 +224,7 @@ public class Controller {
             { //Concepter
                 add("Tools of Proficiency");
                 add("Software");
-                add("Home-Décor");
+                add("Home-Decor");
                 add("Quality of Life Products");
                 add("Personal Care");
             }
@@ -281,7 +259,7 @@ public class Controller {
             { //Concepter
                 add("Qualiy of Life Products");
                 add("Clothing");
-                add("Home-Décor");
+                add("Home-Decor");
                 add("Personal Care");
             }
         }, new ArrayList<Integer>() {
@@ -314,7 +292,7 @@ public class Controller {
         investors.add(new Investor("Musky Elonsius", new ArrayList<String>() {
             { //Concepter
                 add("Software");
-                add("Home-Décor");
+                add("Home-Decor");
                 add("Food Service Industry");
                 add("Quality of Life Products");
             }
@@ -384,7 +362,7 @@ public class Controller {
                 add("Quality of Life Products");
                 add("Personal Care");
                 add("Clothing");
-                add("Home-Décor");
+                add("Home-Decor");
             }
         }, new ArrayList<Integer>() {
             {
@@ -926,14 +904,6 @@ public class Controller {
 
     }
 
-    public void UpdatePlayerPoints() {
-        PlayerPoints.setText("");
-        Player player = new Player();
-        for (Object playerr : players) {
-            PlayerPoints.appendText("\n\n" + player.getName() + "\n" + player.getPlayerPoints());
-        }
-    }
-
     @FXML
     public void initialize() {
 
@@ -1161,7 +1131,7 @@ public class Controller {
 
             PlayerPoints.setText("");
             for (int i = 0; i < players.size(); i++) {
-                PlayerPoints.appendText(String.valueOf(players.get(i).getPlayerPoints()) + "\n");
+                PlayerPoints.appendText("Player " + (i + 1) + ": " + players.get(i).getPlayerPoints() + "\n");
             }
 
             //</editor-fold>
@@ -1175,91 +1145,149 @@ public class Controller {
     public void playerTurn(int playerId) {
 
         TextInputDialog dialog = new TextInputDialog("eg. 900000");
-        dialog.setTitle(null);
+        dialog.setTitle("Player " + (playerId + 1));
         dialog.setHeaderText("how big an investment are you looking for?");
         dialog.setContentText("invest in increments of: 100000's");
 
         Optional<String> result = dialog.showAndWait();
         players.get(playerId).setTurnInvestment(Integer.parseInt(result.get()));
 
-        pickInvestor();
+        boolean[] gottenPoints = new boolean[5];
+        Arrays.fill(gottenPoints, Boolean.FALSE);
 
-        if (cardsInPlay.get(playerId) != null) {
-            // Player have laid down a opportunity card
+        while (!(players.get(playerId).getTurnInvestment() <= 0)) {
 
-            if (useOpportunityCard()) {
-                // Player wants to use the card this round
+            int choosenInvestorIndex = pickInvestor(playerId);
 
-                for (int i = 0; i < cardsInPlay.size(); i++) {
-                    // Check if another player have a denial card
+            // if (choosenInvestorIndex == -1) { break; }
 
-                    if (cardsInPlay.get(i).getOpportunityId() == 4) {
+            if (cardsInPlay.get(playerId) != null) {
+                // Player have laid down a opportunity card
 
-                        if (useOpportunityCard()) {
+                if (useOpportunityCard()) {
+                    // Player wants to use the card this round
 
-                            cardsInPlay.set(i, null);
-                            cardsInPlay.set(playerId, null);
-                            break;
+                    for (int i = 0; i < cardsInPlay.size(); i++) {
+                        // Check if another player have a denial card
+
+                        if (cardsInPlay.get(i).getOpportunityId() == 4) {
+
+                            if (useOpportunityCard()) {
+
+                                cardsInPlay.set(i, null);
+                                cardsInPlay.set(playerId, null);
+                                break;
+
+                            }
 
                         }
 
                     }
 
+                } else {
+
+                    players.get(playerId).getOpportunityCards().add(cardsInPlay.get(0));
+                    cardsInPlay.set(playerId, null);
+
+                }
+
+            }
+
+            int opportunityCardTempInt = 0;
+
+            if (cardsInPlay.get(playerId) != null) {
+
+                if (cardsInPlay.get(playerId).getOpportunityId() == 1) {
+                    opportunityCardTempInt = 1;
+                } else if (cardsInPlay.get(playerId).getOpportunityId() == 3) {
+                    opportunityCardTempInt = 2;
+                }
+
+            }
+
+            int roll = rollDice(players.get(playerId).getTurnInvestment(), opportunityCardTempInt);
+
+            int indexOfInvestorsInvestmentType = investors.get(choosenInvestorIndex).getInvestmentTypes().indexOf(players.get(playerId).getConceptCard());
+
+            if (indexOfInvestorsInvestmentType != -1) {
+
+                if ((roll * 100000) + investors.get(choosenInvestorIndex).getInvestmentAmount(indexOfInvestorsInvestmentType) > 1000000) { break; }
+
+                if ((roll * 100000) < players.get(playerId).getTurnInvestment()) {
+
+                    investors.get(choosenInvestorIndex).updateInvestment(indexOfInvestorsInvestmentType, (roll * 100000));
+                    players.get(playerId).setTurnInvestment(players.get(playerId).getTurnInvestment() - (roll * 100000));
+                    if (gottenPoints[choosenInvestorIndex]) {
+                        players.get(playerId).addPlayerPoints(roll);
+                    } else {
+                        players.get(playerId).addPlayerPoints((roll) + 2);
+                        gottenPoints[choosenInvestorIndex] = true;
+                    }
+
+                } else {
+
+                    investors.get(choosenInvestorIndex).updateInvestment(indexOfInvestorsInvestmentType, players.get(playerId).getTurnInvestment());
+                    if (gottenPoints[choosenInvestorIndex]) {
+                        players.get(playerId).addPlayerPoints((players.get(playerId).getTurnInvestment() / 100000));
+                    } else {
+                        players.get(playerId).addPlayerPoints((players.get(playerId).getTurnInvestment() / 100000) + 2);
+                        gottenPoints[choosenInvestorIndex] = true;
+                    }
+                    players.get(playerId).setTurnInvestment(0);
+
                 }
 
             } else {
 
-                players.get(playerId).getOpportunityCards().add(cardsInPlay.get(0));
-                cardsInPlay.set(playerId, null);
+                Alert error = new Alert(Alert.AlertType.WARNING, "Error!");
+                error.setHeaderText("Choose a investor that have previously invested in your concept.");
+                error.showAndWait();
 
-            }
+                /*if ((roll * 100000) < players.get(playerId).getTurnInvestment()) {
 
-        }
+                    players.get(playerId).setTurnInvestment(players.get(playerId).getTurnInvestment() - (roll * 100000));
+                    if (gottenPoints[choosenInvestorIndex]) {
+                        players.get(playerId).addPlayerPoints(roll);
+                    } else {
+                        players.get(playerId).addPlayerPoints((roll) + 2);
+                        gottenPoints[choosenInvestorIndex] = true;
+                    }
 
-        int opportunityCardTempInt = 0;
-
-        if (cardsInPlay.get(playerId).getOpportunityId() == 1) {
-            opportunityCardTempInt = 1;
-        } else if (cardsInPlay.get(playerId).getOpportunityId() == 3) {
-            opportunityCardTempInt = 2;
-        }
-
-        rollDice(players.get(playerId).getTurnInvestment(), opportunityCardTempInt);
-
-        // TODO - kortets effect skal kaldes
-        // persuasion card
-        // 2 interactable onMouseClicked (Persuade an investor to back your idea instead of a competitors idea.
-        // Convince all investors that a certain concept is a bad idea)
-        // whichever part is clicked on, call that method?
-
-        if (cardsInPlay.get(playerId).getOpportunityId() == 2) {
-
-            // investor.getInvestmentType.indexOf(
-            // call effect here
-            // find investoren
-            // getArrayList
-            // når koncepterne addes, så bliver de addes som et nyt concept. de bliver givet en parameter
-            // som basically er en string i conceptcard klassen
-            // i conceptardmetoden, den vil vi gerne tjekke indexOf
-            //TODO make into seperate method
-            //TODO Make alert that allows the player to choose concept and set that concept == conceptstring
-            String conceptString = "";
-            for (int i = 0; i < 5; ++i) {
-
-                // create a alert that allows player to choose effect
-                int index = investors.get(i).getInvestmentTypes().indexOf(conceptString);
-                if (index != -1) {
-
-                    // It exits andinput code here
-                    investors.get(i).getInvestmentAmounts().set(index, 1000000);
                 } else {
-                    investors.get(i).getInvestmentTypes().add(conceptString);
-                    investors.get(i).getInvestmentAmounts().add(1000000);
+
+                    if (gottenPoints[choosenInvestorIndex]) {
+                        players.get(playerId).addPlayerPoints((players.get(playerId).getTurnInvestment() / 100000));
+                    } else {
+                        players.get(playerId).addPlayerPoints((players.get(playerId).getTurnInvestment() / 100000) + 2);
+                        gottenPoints[choosenInvestorIndex] = true;
+                    }
+                    players.get(playerId).setTurnInvestment(0);
+
                 }
 
+                investors.get(choosenInvestorIndex).getInvestmentTypes().add(players.get(playerId).getConceptCard());
+                investors.get(choosenInvestorIndex).getInvestmentAmounts().add(roll * 100000);*/
+
+            }
+
+            InvestorOne.setText(investors.get(0).toString());
+            InvestorTwo.setText(investors.get(1).toString());
+            InvestorThree.setText(investors.get(2).toString());
+            InvestorFour.setText(investors.get(3).toString());
+            InvestorFive.setText(investors.get(4).toString());
+
+        }
+
+        if (cardsInPlay.get(playerId) != null) {
+
+            if (cardsInPlay.get(playerId).getOpportunityId() == 2) {
+
+                persuasiveCard();
+
             }
 
         }
+
     }
 
     // Used for confirmation by player on to use opportunity card
@@ -1290,7 +1318,9 @@ public class Controller {
         for (OpportunityCard currentCard : player.getOpportunityCards()) {
 
             TextArea card = new TextArea();
-            card.setText(currentCard.toString());
+            card.setPrefWidth(125);
+            card.setWrapText(true);
+            card.setText(currentCard.getTitle() + "\n" + currentCard.getDescription());
             card.setId(String.valueOf(currentCard.getOpportunityId()));
             cards.add(card);
 
@@ -1414,10 +1444,10 @@ public class Controller {
 
     }
 
-    @FXML
-    public int pickInvestor() {
+    public int pickInvestor(int playerId) {
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(null);
+        alert.setTitle("Player " + (playerId + 1));
         alert.setHeaderText("Please pick an investor");
         alert.setContentText(null);
 
@@ -1445,75 +1475,121 @@ public class Controller {
             return 3;
         } else if (alert.getResult() == button5) {
             return 4;
-        } else
+        } else {
             return -1;
+        }
+
     }
 
-    public void chooseOpportunityCards(Player player) {
+    public void chooseOpportunityCards() {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Choose an opportunity card");
         alert.setHeaderText(null);
 
-        for (int i = 0; i < players.size() - 1; i++) {
+        for (int i = 0; i < players.size(); i++) {
 
-            ArrayList<TextArea> cards = new ArrayList<>(); // 4
+            Player player = players.get(i);
 
-            if (i == 0) {
-                for (OpportunityCard currentCard : opportunityCards) {
+            ArrayList<TextArea> cards = new ArrayList<>(4); // 4
 
-                    TextArea card = new TextArea();
-                    card.setText(currentCard.toString());
-                    card.setId(String.valueOf(currentCard.getOpportunityId()));
-                    cards.add(card);
+            for (OpportunityCard currentCard : opportunityCards) {
 
-                }
-            }
-
-            switch (cards.size()) { // bliver brugt til at sætte textar eaet rigtige steder.
-                case 1 -> {
-                    HBox container = new HBox(cards.get(0));
-                    alert.getDialogPane().setContent(container);
-                }
-                case 2 -> {
-                    HBox container = new HBox(cards.get(0), cards.get(1));
-                    alert.getDialogPane().setContent(container);
-                }
-                case 3 -> {
-                    HBox container = new HBox(cards.get(0), cards.get(1), cards.get(2));
-                    alert.getDialogPane().setContent(container);
-                }
-                case 4 -> {
-                    HBox container = new HBox(cards.get(0), cards.get(1), cards.get(2), cards.get(3));
-                    alert.getDialogPane().setContent(container);
-                }
-            }
-
-            for (int n = 1; n < cards.size() + 1; n++) {
-
-                ButtonType cardButton = new ButtonType("Card " + n, ButtonData.OTHER);
-                alert.getDialogPane().getButtonTypes().add(cardButton);
+                TextArea card = new TextArea();
+                card.setPrefWidth(125);
+                card.setWrapText(true);
+                card.setId(String.valueOf(currentCard.getOpportunityId()));
+                card.setText(currentCard.getTitle() + "\n" + currentCard.getDescription());
+                card.setId(String.valueOf(currentCard.getOpportunityId()));
+                cards.add(card);
 
             }
 
-            alert.showAndWait();
+            for (int j = 0; j < players.size() - 1; j++) {
 
-            switch (alert.getResult().getText()) { //
-                case "Card 1" -> { // cards -'> textarea - get(0) første tekst area. og id'et er opportunity card som den henfører til.
-                    player.getOpportunityCards().add(opportunityCards.get(0));
-                    cards.set(0, null);
+                alert.getDialogPane().getButtonTypes().clear();
+
+                switch (cards.size()) { // bliver brugt til at sætte textar eaet rigtige steder.
+                    case 1 -> {
+                        HBox container = new HBox(cards.get(0));
+                        alert.getDialogPane().setContent(container);
+                    }
+                    case 2 -> {
+                        HBox container = new HBox(cards.get(0), cards.get(1));
+                        alert.getDialogPane().setContent(container);
+                    }
+                    case 3 -> {
+                        HBox container = new HBox(cards.get(0), cards.get(1), cards.get(2));
+                        alert.getDialogPane().setContent(container);
+                    }
+                    case 4 -> {
+                        HBox container = new HBox(cards.get(0), cards.get(1), cards.get(2), cards.get(3));
+                        alert.getDialogPane().setContent(container);
+                    }
                 }
-                case "Card 2" -> {
-                    player.getOpportunityCards().add(opportunityCards.get(1));
-                    cards.set(1, null);
+
+                for (int n = 1; n < cards.size() + 1; n++) {
+
+                    ButtonType cardButton = new ButtonType("Card " + n, ButtonData.OTHER);
+                    alert.getDialogPane().getButtonTypes().add(cardButton);
+
                 }
-                case "Card 3" -> {
-                    player.getOpportunityCards().add(opportunityCards.get(2));
-                    cards.set(2, null);
+
+                alert.showAndWait();
+
+                switch (alert.getResult().getText()) { //
+                    case "Card 1" -> { // cards -'> textarea - get(0) første tekst area. og id'et er opportunity card som den henfører til.
+                        player.getOpportunityCards().add(opportunityCards.get(Integer.parseInt(cards.get(0).getId())));
+                        cards.remove(0);
+                    }
+                    case "Card 2" -> {
+                        player.getOpportunityCards().add(opportunityCards.get(Integer.parseInt(cards.get(1).getId())));
+                        cards.remove(1);
+                    }
+                    case "Card 3" -> {
+                        player.getOpportunityCards().add(opportunityCards.get(Integer.parseInt(cards.get(2).getId())));
+                        cards.remove(2);
+                    }
+                    case "Card 4" -> {
+                        player.getOpportunityCards().add(opportunityCards.get(Integer.parseInt(cards.get(3).getId())));
+                        cards.remove(3);
+                    }
                 }
-                case "Card 4" -> {
-                    player.getOpportunityCards().add(opportunityCards.get(3));
-                    cards.set(3, null);
-                }
+
+            }
+
+        }
+
+    }
+
+    public void persuasiveCard() {
+
+        ArrayList<ButtonType> conceptButtons = new ArrayList<>();
+
+        for (int i = 0; i < conceptCards.size(); i++) {
+
+            ButtonType conceptsButton = new ButtonType(conceptCards.get(i).getConcept(), ButtonData.OTHER);
+            conceptButtons.add(conceptsButton);
+
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Choose a Concept");
+        alert.setHeaderText(null);
+        alert.getDialogPane().getButtonTypes().addAll(conceptButtons);
+        alert.showAndWait();
+
+        String conceptString = alert.getResult().getText();
+        for (int i = 0; i < 5; ++i) {
+
+            // create a alert that allows player to choose effect
+            int index = investors.get(i).getInvestmentTypes().indexOf(conceptString);
+            if (index != -1) {
+
+                // It exits and input code here
+                investors.get(i).getInvestmentAmounts().set(index, 1000000);
+            } else {
+                investors.get(i).getInvestmentTypes().add(conceptString);
+                investors.get(i).getInvestmentAmounts().add(1000000);
             }
 
         }

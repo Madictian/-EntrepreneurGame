@@ -24,6 +24,10 @@ public class Player {
         this.conceptCard = conceptCard;
     }
 
+    public String getConceptCard() {
+        return this.conceptCard.getConcept();
+    }
+
     public Player() {
     }
 

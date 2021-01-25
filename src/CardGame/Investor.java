@@ -37,15 +37,17 @@ public class Investor {
     }
 
     public void updateInvestment(int index, int amount) {
-        investmentAmounts.set(index, amount);
+        investmentAmounts.set(index, investmentAmounts.get(index) + amount);
     }
 
-    public String toString(){
+    @Override
+    public String toString() {
+
         String stuff = "";
         for (int i = 0; i < investmentAmounts.size(); i++) {
             stuff += investmentAmounts.get(i) + " " + investmentTypes.get(i) + "\n";
-
         }
+
         return name + "\n" + stuff;
     }
 
