@@ -6,15 +6,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 
-import java.awt.*;
 import java.util.*;
 
 import CardGame.Player;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import CardGame.Investor;
 
 public class Controller {
@@ -29,7 +25,8 @@ public class Controller {
     TextArea InvestorFour;
     @FXML
     TextArea InvestorFive;
-
+    @FXML
+    Button GameStart;
     @FXML
     TextArea PlayerPoints;
 
@@ -940,48 +937,81 @@ public class Controller {
     @FXML
     public void initialize() {
 
-        // Start a game by prompt
+        //<editor-fold-desc="Initialization of ArrayList's">
+        conceptCards = new ArrayList<>();
+        conceptCards.add(new ConceptCard("Software"));
+        conceptCards.add(new ConceptCard("Tools of Proficiency"));
+        conceptCards.add(new ConceptCard("Food Service Industry"));
+        conceptCards.add(new ConceptCard("Clothing"));
+        conceptCards.add(new ConceptCard("Personal care"));
+        conceptCards.add(new ConceptCard("Home-Decor"));
+        conceptCards.add(new ConceptCard("Quality of Life Products"));
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "How Many Players?");
-        alert.setHeaderText(null);
+        opportunityCards = new ArrayList<>();
+        opportunityCards.add(new OpportunityCard(1));
+        opportunityCards.add(new OpportunityCard(2));
+        opportunityCards.add(new OpportunityCard(3));
+        opportunityCards.add(new OpportunityCard(4));
 
-        for (int i = 2; i < 5; i++) {
-
-            ButtonType amountButton = new ButtonType(String.valueOf(i), ButtonData.OTHER);
-            alert.getDialogPane().getButtonTypes().add(amountButton);
-
-        }
-
-        alert.showAndWait();
-
-        int amountOfPlayers = 0;
-
-        switch (alert.getResult().getText()) {
-            case "2" -> {
-                amountOfPlayers = 2;
-            }
-            case "3" -> {
-                amountOfPlayers = 3;
-            }
-            case "4" -> {
-                amountOfPlayers = 4;
-            }
-            case "5" -> {
-                amountOfPlayers = 5;
-            }
-        }
-
-        for (int i = 0; i < amountOfPlayers; i++) {
-            players.add(new Player());
-        }
-
-        for (int i = 0; i < amountOfPlayers; i++) {
-            chooseOpportunityCards(players.get(i));
-        }
+        cardsInPlay = new ArrayList<>();
+        cardsInPlay.add(new OpportunityCard(1));
+        cardsInPlay.add(new OpportunityCard(1));
+        cardsInPlay.add(new OpportunityCard(1));
+        cardsInPlay.add(new OpportunityCard(1));
+        cardsInPlay.add(new OpportunityCard(1));
+        cardsInPlay.set(0, null);
+        cardsInPlay.set(1, null);
+        cardsInPlay.set(2, null);
+        cardsInPlay.set(3, null);
+        cardsInPlay.set(4, null);
 
         investorSetup();
+        //</editor-fold>
 
-        newRound();
+        //<editor-fold-desc="Start Game Method">
+        GameStart.setOnAction(e -> {
+
+            // Start a game by prompt
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "How Many Players?");
+            alert.setHeaderText(null);
+
+            for (int i = 2; i < 5; i++) {
+
+                ButtonType amountButton = new ButtonType(String.valueOf(i), ButtonData.OTHER);
+                alert.getDialogPane().getButtonTypes().add(amountButton);
+
+            }
+
+            alert.showAndWait();
+
+            int amountOfPlayers = 0;
+
+            switch (alert.getResult().getText()) {
+                case "2" -> {
+                    amountOfPlayers = 2;
+                }
+                case "3" -> {
+                    amountOfPlayers = 3;
+                }
+                case "4" -> {
+                    amountOfPlayers = 4;
+                }
+                case "5" -> {
+                    amountOfPlayers = 5;
+                }
+            }
+
+            for (int i = 0; i < amountOfPlayers; i++) {
+                players.add(new Player());
+            }
+
+            chooseOpportunityCards();
+
+            GameStart.setVisible(false);
+            newRound();
+        });
+        //</editor-fold>
 
     }
 

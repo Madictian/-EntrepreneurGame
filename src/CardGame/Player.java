@@ -8,6 +8,8 @@ public class Player {
     private int playerPoint;
     private ArrayList<OpportunityCard> opportunityCards = new ArrayList<OpportunityCard>();// Player chosen opportunity cards
     private ConceptCard conceptCard; // Players chosen concept card
+    private int turnInvestment;
+
 
     public int getTurnInvestment() {
         return turnInvestment;
@@ -17,7 +19,6 @@ public class Player {
         this.turnInvestment = turnInvestment;
     }
 
-    private int turnInvestment;
 
     public void setConceptCard(ConceptCard conceptCard) {
         this.conceptCard = conceptCard;

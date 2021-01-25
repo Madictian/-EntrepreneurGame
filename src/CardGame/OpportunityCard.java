@@ -1,7 +1,5 @@
 package CardGame;
 
-import java.util.Random;
-
 public class OpportunityCard {
 
     private String title;

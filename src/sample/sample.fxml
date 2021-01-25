@@ -21,8 +21,8 @@
             </HBox>
             <TextArea fx:id="PlayerPoints" layoutX="60.0" layoutY="505.0" prefHeight="117.0" prefWidth="151.0" />
             <HBox fx:id="Concepts" layoutX="440.0" layoutY="514.0" prefHeight="100.0" prefWidth="200.0" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="461.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="test_button" layoutX="76.0" layoutY="343.0" mnemonicParsing="false" text="Button" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="440.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="GameStart" layoutX="459.0" layoutY="694.0" mnemonicParsing="false" onAction="#newRound" text="Game start!" />
             <TextArea fx:id="InvestorOne" layoutX="211.0" layoutY="49.0" prefHeight="120.0" prefWidth="80.0" />
             <TextArea fx:id="InvestorTwo" layoutX="356.0" layoutY="49.0" prefHeight="120.0" prefWidth="80.0" />
             <TextArea fx:id="InvestorThree" layoutX="498.0" layoutY="49.0" prefHeight="120.0" prefWidth="80.0" />
