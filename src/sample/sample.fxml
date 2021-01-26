@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -12,22 +16,20 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="920.0" prefWidth="1080.0">
+      <AnchorPane fx:id="AnchorPain" prefHeight="900.0" prefWidth="1440.0">
          <children>
-            <HBox fx:id="Opprotunity_cards_all" layoutX="111.0" layoutY="753.0" prefHeight="100.0" prefWidth="900.0">
+            <HBox fx:id="player_Concepts" layoutX="370.0" layoutY="680.0" opacity="0.5" prefHeight="100.0" prefWidth="700.0" spacing="70.0" />
+            <HBox layoutX="220.0" layoutY="86.0" prefHeight="120.0" prefWidth="1000.0" spacing="20.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="150.0" />
+                  <TextArea fx:id="InvestorOne" prefHeight="120.0" prefWidth="185.0" />
+                  <TextArea fx:id="InvestorTwo" prefHeight="120.0" prefWidth="185.0" />
+                  <TextArea fx:id="InvestorThree" prefHeight="120.0" prefWidth="185.0" />
+                  <TextArea fx:id="InvestorFour" prefHeight="120.0" prefWidth="185.0" />
+                  <TextArea fx:id="InvestorFive" prefHeight="120.0" prefWidth="185.0" />
                </children>
             </HBox>
             <TextArea fx:id="PlayerPoints" layoutX="60.0" layoutY="505.0" prefHeight="117.0" prefWidth="151.0" />
-            <HBox fx:id="Concepts" layoutX="440.0" layoutY="514.0" prefHeight="100.0" prefWidth="200.0" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="440.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="GameStart" layoutX="459.0" layoutY="694.0" mnemonicParsing="false" onAction="#newRound" text="Game start!" />
-            <TextArea fx:id="InvestorOne" layoutX="211.0" layoutY="49.0" prefHeight="120.0" prefWidth="80.0" />
-            <TextArea fx:id="InvestorTwo" layoutX="356.0" layoutY="49.0" prefHeight="120.0" prefWidth="80.0" />
-            <TextArea fx:id="InvestorThree" layoutX="498.0" layoutY="49.0" prefHeight="120.0" prefWidth="80.0" />
-            <TextArea fx:id="InvestorFour" layoutX="640.0" layoutY="49.0" prefHeight="120.0" prefWidth="80.0" />
-            <TextArea fx:id="InvestorFive" layoutX="784.0" layoutY="49.0" prefHeight="120.0" prefWidth="80.0" />
+            <Button fx:id="GameStart" layoutX="97.0" layoutY="680.0" mnemonicParsing="false" onAction="#newRound" text="Game start!" />
          </children>
       </AnchorPane>
    </children>

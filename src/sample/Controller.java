@@ -46,15 +46,15 @@ public class Controller {
         String tool = "Tools of Proficiency";
         String home = "Home-Decor";
         String soft = "Software";
-        String care = "Personal Care";
+        String care = "Personal care";
 
         //name, investments, investment amount
         investors.add(new Investor("Reyn Ryanolds", new ArrayList<String>() {
             {
-                add("Food Service Industry");
-                add("Quality of Life Products");
-                add("Clothing");
-                add("Tools of Proficiency");
+                add(food);
+                add(quality);
+                add(cloth);
+                add(tool);
             }
         }, new ArrayList<Integer>() {
             {
@@ -85,10 +85,10 @@ public class Controller {
         }));
         investors.add(new Investor("Cim Jarrey", new ArrayList<String>() {
             { //Concepter
-                add("Quality of Life Products");
-                add("Personal Care");
-                add("Software");
-                add("Home-Decor");
+                add(quality);
+                add(care);
+                add(soft);
+                add(home);
             }
         }, new ArrayList<Integer>() {
             {
@@ -120,10 +120,10 @@ public class Controller {
 
         investors.add(new Investor("Eiichi oroda", new ArrayList<String>() {
             { //Concepter
-                add("Home-Decor");
-                add("Clothing");
-                add("Quality of Life Products");
-                add("Tools of Proficiency");
+                add(home);
+                add(cloth);
+                add(quality);
+                add(tool);
             }
         }, new ArrayList<Integer>() {
             {
@@ -154,10 +154,10 @@ public class Controller {
         }));
         investors.add(new Investor("Oliver Jamie", new ArrayList<String>() {
             { //Concepter
-                add("Tools of Proficiency");
-                add("Home-Decor");
-                add("Food Service Industry");
-                add("Personal Care");
+                add(tool);
+                add(home);
+                add(food);
+                add(care);
             }
         }, new ArrayList<Integer>() {
             {
@@ -188,10 +188,10 @@ public class Controller {
         }));
         investors.add(new Investor("Swon Ranson", new ArrayList<String>() {
             { //Concepter
-                add("Tools of Proficiency");
-                add("Food Service Industry");
-                add("Clothing");
-                add("Home-Decor");
+                add(tool);
+                add(food);
+                add(cloth);
+                add(home);
             }
         }, new ArrayList<Integer>() {
             {
@@ -222,11 +222,10 @@ public class Controller {
         }));
         investors.add(new Investor("Stony Tark", new ArrayList<String>() {
             { //Concepter
-                add("Tools of Proficiency");
-                add("Software");
-                add("Home-Decor");
-                add("Quality of Life Products");
-                add("Personal Care");
+                add(tool);
+                add(soft);
+                add(home);
+                add(quality);
             }
         }, new ArrayList<Integer>() {
             {
@@ -257,10 +256,10 @@ public class Controller {
         }));
         investors.add(new Investor("Willie Black", new ArrayList<String>() {
             { //Concepter
-                add("Qualiy of Life Products");
-                add("Clothing");
-                add("Home-Decor");
-                add("Personal Care");
+                add(quality);
+                add(cloth);
+                add(home);
+                add(care);
             }
         }, new ArrayList<Integer>() {
             {
@@ -291,10 +290,10 @@ public class Controller {
         }));
         investors.add(new Investor("Musky Elonsius", new ArrayList<String>() {
             { //Concepter
-                add("Software");
-                add("Home-Decor");
-                add("Food Service Industry");
-                add("Quality of Life Products");
+                add(soft);
+                add(home);
+                add(food);
+                add(quality);
             }
         }, new ArrayList<Integer>() {
             {
@@ -325,10 +324,10 @@ public class Controller {
         }));
         investors.add(new Investor("Alex Lavigne", new ArrayList<String>() {
             { //Concepter
-                add("Quality of Life Products");
-                add("Food Service Industry");
-                add("Software");
-                add("Personal Care");
+                add(quality);
+                add(food);
+                add(soft);
+                add(care);
             }
         }, new ArrayList<Integer>() {
             {
@@ -359,10 +358,10 @@ public class Controller {
         }));
         investors.add(new Investor("Arnold Weissmenschen", new ArrayList<String>() {
             { //Concepter
-                add("Quality of Life Products");
-                add("Personal Care");
-                add("Clothing");
-                add("Home-Decor");
+                add(quality);
+                add(care);
+                add(cloth);
+                add(home);
             }
         }, new ArrayList<Integer>() {
             {
@@ -719,7 +718,7 @@ public class Controller {
                 }
 
                 if (rand.nextBoolean()) {
-                    add(3000000);
+                    add(300000);
                 } else {
                     add(700000);
                 }
@@ -906,6 +905,31 @@ public class Controller {
 
     @FXML
     public void initialize() {
+
+        //<editor-fold-desc="FXML stuff">
+        player_Concepts.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        Image image = new Image("sample/Untitled.png");
+
+        AnchorPain.setBackground(new Background(new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT)));
+
+        InvestorOne.setEditable(false);
+        InvestorTwo.setEditable(false);
+        InvestorThree.setEditable(false);
+        InvestorFour.setEditable(false);
+        InvestorFive.setEditable(false);
+        PlayerPoints.setEditable(false);
+        InvestorOne.setStyle("-fx-border-width: 1; -fx-border-radius: 16; -fx-focus-color: transparent");
+        InvestorTwo.setStyle("-fx-border-width: 1; -fx-border-radius: 16; -fx-focus-color: transparent");
+        InvestorThree.setStyle("-fx-border-width: 1; -fx-border-radius: 16; -fx-focus-color: transparent");
+        InvestorFour.setStyle("-fx-border-width: 1; -fx-border-radius: 16; -fx-focus-color: transparent");
+        InvestorFive.setStyle("-fx-border-width: 1; -fx-border-radius: 16; -fx-focus-color: transparent");
+        PlayerPoints.setStyle("-fx-border-width: 1; -fx-border-radius: 16; -fx-focus-color: transparent");
+        //</editor-fold>
 
         //<editor-fold-desc="Initialization of ArrayList's">
         conceptCards = new ArrayList<>();
@@ -1587,11 +1611,8 @@ public class Controller {
 
                 // It exits and input code here
                 investors.get(i).getInvestmentAmounts().set(index, 1000000);
-            } else {
-                investors.get(i).getInvestmentTypes().add(conceptString);
-                investors.get(i).getInvestmentAmounts().add(1000000);
-            }
 
+            }
         }
 
     }
