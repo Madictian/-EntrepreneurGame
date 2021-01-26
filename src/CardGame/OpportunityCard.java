@@ -10,19 +10,19 @@ public class OpportunityCard {
         this.opportunityId = id;
 
         switch (id) {
-            case 1 -> { // Golden Opportunity card
+            case 0 -> { // Golden Opportunity card
                 this.description = "If you used one investor will always invest the highest possible amount\n" + "(no more than asked)";
                 this.title = "Golden Opportunity";
             }
-            case 2 -> { // Persuasive card
+            case 1 -> { // Persuasive card
                 this.description = "Persuade an investor to back your idea instead of a competitors idea. Convince all investors that a certain concept is a bad idea.";
                 this.title = "Persuasive Opportunity";
             }
-            case 3 -> { // Re-roll card
+            case 2 -> { // Re-roll card
                 this.description = "Can be used to reroll a die that went over the investors limit.";
                 this.title = "Safety Net";
             }
-            case 4 -> { // Deny Opportunity card
+            case 3 -> { // Deny Opportunity card
                 this.description = "negate the activation of 1 players opportunity card.";
                 this.title = "Deny opportunity";
             }

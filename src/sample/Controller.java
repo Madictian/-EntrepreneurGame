@@ -2,6 +2,7 @@ package sample;
 
 import CardGame.*;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -10,8 +11,11 @@ import java.util.*;
 
 import CardGame.Player;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import CardGame.Investor;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class Controller {
 
@@ -29,6 +33,13 @@ public class Controller {
     Button GameStart;
     @FXML
     TextArea PlayerPoints;
+    @FXML
+    AnchorPane AnchorPain;
+    @FXML
+    HBox player_Concepts;
+
+    private ArrayList<Label> conceptLabels = new ArrayList<>();
+    private ArrayList<Label> playerLabels = new ArrayList<>();
 
     private ArrayList<ConceptCard> conceptCards = new ArrayList<>(); // Holds all the different concept cards in the game
     private ArrayList<OpportunityCard> opportunityCards = new ArrayList<>(); // The 4 different opportunity cards that exist
@@ -942,10 +953,10 @@ public class Controller {
         conceptCards.add(new ConceptCard("Quality of Life Products"));
 
         opportunityCards = new ArrayList<>();
+        opportunityCards.add(new OpportunityCard(0));
         opportunityCards.add(new OpportunityCard(1));
         opportunityCards.add(new OpportunityCard(2));
         opportunityCards.add(new OpportunityCard(3));
-        opportunityCards.add(new OpportunityCard(4));
 
         cardsInPlay = new ArrayList<>();
         cardsInPlay.add(new OpportunityCard(1));
@@ -970,7 +981,7 @@ public class Controller {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "How Many Players?");
             alert.setHeaderText(null);
 
-            for (int i = 2; i < 5; i++) {
+            for (int i = 2; i <= 5; i++) {
 
                 ButtonType amountButton = new ButtonType(String.valueOf(i), ButtonData.OTHER);
                 alert.getDialogPane().getButtonTypes().add(amountButton);
@@ -997,7 +1008,30 @@ public class Controller {
             }
 
             for (int i = 0; i < amountOfPlayers; i++) {
+
                 players.add(new Player());
+
+                do {
+
+                    TextInputDialog dialog = new TextInputDialog("eg. Lasse");
+                    dialog.setTitle("Player " + (i + 1));
+                    dialog.setHeaderText(null);
+                    dialog.setContentText("What is your name?");
+
+                    Optional<String> result = dialog.showAndWait();
+                    players.get(i).setName(result.get());
+
+                } while (!(players.get(i).getName().length() > 0));
+
+                Label player = new Label(players.get(i).getName());
+                Label playerConcept = new Label("Concept");
+
+                VBox container = new VBox(player, playerConcept);
+
+                playerLabels.add(player);
+                conceptLabels.add(playerConcept);
+                player_Concepts.getChildren().addAll(container);
+
             }
 
             chooseOpportunityCards();
@@ -1066,7 +1100,7 @@ public class Controller {
             for (int i = 0; i < players.size(); i++) {
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Choose a Concept");
+                alert.setTitle(players.get(i).getName() + " Choose a Concept");
                 alert.setHeaderText(null);
                 alert.getDialogPane().getButtonTypes().addAll(conceptButtons);
                 alert.showAndWait();
@@ -1099,10 +1133,9 @@ public class Controller {
 
             }
 
-
-            // TODO (FXML) - Find a way to create or show choosen concept card on the board, and remember to place them at the correct players
-
-
+            for (int i = 0; i < players.size(); i++) {
+                conceptLabels.get(i).setText(players.get(i).getConceptCard());
+            }
             //</editor-fold>
 
             //<editor-fold-desc="Phase 3 - Opportunity cards">
@@ -1111,16 +1144,16 @@ public class Controller {
 
                 if (!players.get(i).getOpportunityCards().isEmpty()) {
 
-                    int cardId = layDownOpportunityCard(players.get(i));
+                    int cardId = layDownOpportunityCard(i);
 
-                    if (cardId != 0) {
+                    if (cardId != -1) {
 
-                        for (OpportunityCard currentCard : players.get(i).getOpportunityCards()) {
+                        for (int n = 0; n < players.get(i).getOpportunityCards().size(); n++) {
 
-                            if (currentCard.getOpportunityId() == cardId) {
+                            if (players.get(i).getOpportunityCards().get(n).getOpportunityId() == cardId) {
 
-                                players.get(i).getOpportunityCards().remove(i);
-                                cardsInPlay.set(i, currentCard);
+                                cardsInPlay.set(i, players.get(i).getOpportunityCards().get(n));
+                                players.get(i).getOpportunityCards().remove(n);
                                 break;
 
                             }
@@ -1155,7 +1188,19 @@ public class Controller {
 
             PlayerPoints.setText("");
             for (int i = 0; i < players.size(); i++) {
-                PlayerPoints.appendText("Player " + (i + 1) + ": " + players.get(i).getPlayerPoints() + "\n");
+                PlayerPoints.appendText(players.get(i).getName() + ": " + players.get(i).getPlayerPoints() + "\n");
+            }
+
+            for (int i = 0; i < (players.size() - 1); i++) {
+                int j = i + 1;
+                Collections.swap(players, i, j);
+                Collections.swap(playerLabels, i, j);
+            }
+
+            player_Concepts.getChildren().clear();
+            for (int i = 0; i < players.size(); i++) {
+                VBox container = new VBox(playerLabels.get(i), conceptLabels.get(i));
+                player_Concepts.getChildren().add(container);
             }
 
             //</editor-fold>
@@ -1169,7 +1214,7 @@ public class Controller {
     public void playerTurn(int playerId) {
 
         TextInputDialog dialog = new TextInputDialog("eg. 900000");
-        dialog.setTitle("Player " + (playerId + 1));
+        dialog.setTitle(players.get(playerId).getName());
         dialog.setHeaderText("how big an investment are you looking for?");
         dialog.setContentText("invest in increments of: 100000's");
 
@@ -1178,6 +1223,8 @@ public class Controller {
 
         boolean[] gottenPoints = new boolean[5];
         Arrays.fill(gottenPoints, Boolean.FALSE);
+
+        boolean cardUsed = false;
 
         while (!(players.get(playerId).getTurnInvestment() <= 0)) {
 
@@ -1188,54 +1235,79 @@ public class Controller {
             if (cardsInPlay.get(playerId) != null) {
                 // Player have laid down a opportunity card
 
-                if (useOpportunityCard()) {
-                    // Player wants to use the card this round
+                if (cardsInPlay.get(playerId).getOpportunityId() != 3) {
 
-                    for (int i = 0; i < cardsInPlay.size(); i++) {
-                        // Check if another player have a denial card
+                    if (useOpportunityCard()) {
+                        // Player wants to use the card this round
 
-                        if (cardsInPlay.get(i).getOpportunityId() == 4) {
+                        for (int i = 0; i < cardsInPlay.size(); i++) {
+                            // Check if another player have a denial card
 
-                            if (useOpportunityCard()) {
+                            if (cardsInPlay.get(i) != null) {
 
-                                cardsInPlay.set(i, null);
-                                cardsInPlay.set(playerId, null);
-                                break;
+                                if (cardsInPlay.get(i).getOpportunityId() == 3) {
 
+                                    if (useOpportunityCard()) {
+
+                                        cardsInPlay.set(i, null);
+                                        cardsInPlay.set(playerId, null);
+                                        break;
+
+                                    }
+                                }
                             }
-
                         }
+
+                        cardUsed = true;
+
+                    } else {
+
+                        players.get(playerId).getOpportunityCards().add(cardsInPlay.get(0));
+                        cardsInPlay.set(playerId, null);
 
                     }
 
-                } else {
-
-                    players.get(playerId).getOpportunityCards().add(cardsInPlay.get(0));
-                    cardsInPlay.set(playerId, null);
-
                 }
 
             }
 
-            int opportunityCardTempInt = 0;
+            int roll;
 
-            if (cardsInPlay.get(playerId) != null) {
-
-                if (cardsInPlay.get(playerId).getOpportunityId() == 1) {
-                    opportunityCardTempInt = 1;
-                } else if (cardsInPlay.get(playerId).getOpportunityId() == 3) {
-                    opportunityCardTempInt = 2;
-                }
-
+            if (cardsInPlay.get(playerId) == null) {
+                roll = rollDice(players.get(playerId).getTurnInvestment(), -1);
+            } else {
+                roll = rollDice(players.get(playerId).getTurnInvestment(), cardsInPlay.get(playerId).getOpportunityId());
             }
-
-            int roll = rollDice(players.get(playerId).getTurnInvestment(), opportunityCardTempInt);
 
             int indexOfInvestorsInvestmentType = investors.get(choosenInvestorIndex).getInvestmentTypes().indexOf(players.get(playerId).getConceptCard());
 
             if (indexOfInvestorsInvestmentType != -1) {
 
-                if ((roll * 100000) + investors.get(choosenInvestorIndex).getInvestmentAmount(indexOfInvestorsInvestmentType) > 1000000) { break; }
+                if ((roll * 100000) + investors.get(choosenInvestorIndex).getInvestmentAmount(indexOfInvestorsInvestmentType) > 1000000) {
+
+                    if (cardsInPlay.get(playerId) != null) {
+
+                        if (cardsInPlay.get(playerId).getOpportunityId() == 2) {
+
+                            if (cardsInPlay.get(playerId) == null) {
+                                roll = rollDice(players.get(playerId).getTurnInvestment(), -1);
+                            } else {
+                                roll = rollDice(players.get(playerId).getTurnInvestment(), cardsInPlay.get(playerId).getOpportunityId());
+                            }
+
+                            if ((roll * 100000) + investors.get(choosenInvestorIndex).getInvestmentAmount(indexOfInvestorsInvestmentType) > 1000000) {
+                                break;
+                            }
+
+                        } else {
+                            break;
+                        }
+
+                    }
+
+                    break;
+
+                }
 
                 if ((roll * 100000) < players.get(playerId).getTurnInvestment()) {
 
@@ -1267,31 +1339,6 @@ public class Controller {
                 error.setHeaderText("Choose a investor that have previously invested in your concept.");
                 error.showAndWait();
 
-                /*if ((roll * 100000) < players.get(playerId).getTurnInvestment()) {
-
-                    players.get(playerId).setTurnInvestment(players.get(playerId).getTurnInvestment() - (roll * 100000));
-                    if (gottenPoints[choosenInvestorIndex]) {
-                        players.get(playerId).addPlayerPoints(roll);
-                    } else {
-                        players.get(playerId).addPlayerPoints((roll) + 2);
-                        gottenPoints[choosenInvestorIndex] = true;
-                    }
-
-                } else {
-
-                    if (gottenPoints[choosenInvestorIndex]) {
-                        players.get(playerId).addPlayerPoints((players.get(playerId).getTurnInvestment() / 100000));
-                    } else {
-                        players.get(playerId).addPlayerPoints((players.get(playerId).getTurnInvestment() / 100000) + 2);
-                        gottenPoints[choosenInvestorIndex] = true;
-                    }
-                    players.get(playerId).setTurnInvestment(0);
-
-                }
-
-                investors.get(choosenInvestorIndex).getInvestmentTypes().add(players.get(playerId).getConceptCard());
-                investors.get(choosenInvestorIndex).getInvestmentAmounts().add(roll * 100000);*/
-
             }
 
             InvestorOne.setText(investors.get(0).toString());
@@ -1304,13 +1351,15 @@ public class Controller {
 
         if (cardsInPlay.get(playerId) != null) {
 
-            if (cardsInPlay.get(playerId).getOpportunityId() == 2) {
+            if (cardsInPlay.get(playerId).getOpportunityId() == 1) {
 
                 persuasiveCard();
 
             }
 
         }
+
+        if (cardUsed) { cardsInPlay.set(playerId, null); }
 
     }
 
@@ -1330,16 +1379,18 @@ public class Controller {
     }
 
     // Here you choose to lay down a opportunitycard
-    public int layDownOpportunityCard(Player player) {
+    public int layDownOpportunityCard(int playerId) {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Lay Down Opportunity Card");
         alert.setHeaderText(null);
+        alert.getDialogPane().getButtonTypes().clear();
+        alert.setTitle(players.get(playerId).getName());
 
         ButtonType pass = new ButtonType("Pass", ButtonData.CANCEL_CLOSE);
 
         ArrayList<TextArea> cards = new ArrayList<>();
 
-        for (OpportunityCard currentCard : player.getOpportunityCards()) {
+        for (OpportunityCard currentCard : players.get(playerId).getOpportunityCards()) {
 
             TextArea card = new TextArea();
             card.setPrefWidth(125);
@@ -1384,7 +1435,7 @@ public class Controller {
 
         if (alert.getResult() == pass) {
 
-            return 0;
+            return -1;
 
         } else {
 
@@ -1402,7 +1453,7 @@ public class Controller {
                     return Integer.parseInt(cards.get(3).getId());
                 }
                 default -> {
-                    return 0;
+                    return -1;
                 }
             }
 
@@ -1415,25 +1466,9 @@ public class Controller {
 
         Random rand = new Random();
 
-        if (i == 1/*Golden opportunity card used*/) {
+        if (i == 0/*Golden opportunity card used*/) {
 
             return investmentAmount / 100000;
-
-        } else if (i == 2) {
-
-            // Call opportunityCard's effect here
-
-            int roll = (rand.nextInt((10 - 1) + 1) + 1);
-
-            if (roll > (investmentAmount / 100000)) {
-
-                return (rand.nextInt((10 - 1) + 1) + 1);
-
-            } else {
-
-                return roll;
-
-            }
 
         } else {
 
@@ -1456,11 +1491,11 @@ public class Controller {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Scoreboard");
-        alert.setHeaderText("Player " + playerIndex + 1 + " is the winner");
+        alert.setHeaderText(players.get(playerIndex).getName() + " is the winner");
         String str = "";
 
         for (int i = 0; i < players.size(); i++) {
-            str += "Player " + (i + 1) + ": " + players.get(i).getPlayerPoints() + "\n";
+            str += players.get(i).getName() + ": " + players.get(i).getPlayerPoints() + "\n";
         }
         alert.setContentText(str);
 
@@ -1471,7 +1506,7 @@ public class Controller {
     public int pickInvestor(int playerId) {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Player " + (playerId + 1));
+        alert.setTitle(players.get(playerId).getName());
         alert.setHeaderText("Please pick an investor");
         alert.setContentText(null);
 
@@ -1511,6 +1546,8 @@ public class Controller {
         alert.setHeaderText(null);
 
         for (int i = 0; i < players.size(); i++) {
+
+            alert.setTitle(players.get(i).getName());
 
             Player player = players.get(i);
 
@@ -1614,6 +1651,12 @@ public class Controller {
 
             }
         }
+
+        InvestorOne.setText(investors.get(0).toString());
+        InvestorTwo.setText(investors.get(1).toString());
+        InvestorThree.setText(investors.get(2).toString());
+        InvestorFour.setText(investors.get(3).toString());
+        InvestorFive.setText(investors.get(4).toString());
 
     }
 
